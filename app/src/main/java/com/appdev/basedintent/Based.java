@@ -10,9 +10,9 @@ public class Based {
     private Date mDate;
     private boolean mBased;
 
-    public Based(String mTitle, UUID mId) {
-        this.mTitle = mTitle;
-        this.mId = mId;
+    public Based() {
+        mId = UUID.randomUUID();
+        mDate = new Date();
     }
 
     public String getTitle() {
