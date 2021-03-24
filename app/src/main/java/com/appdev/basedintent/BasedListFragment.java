@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class BasedListFragment extends Fragment {
@@ -38,14 +40,17 @@ public class BasedListFragment extends Fragment {
         private TextView mTitleTextView;
         private TextView mDateTextView;
 
+
+        public BasedHolder(LayoutInflater inflater, ViewGroup parent) {
+            super(inflater.inflate(R.layout.list_item_based, parent, false));
+            itemView.setOnClickListener(this);
+            mTitleTextView = (TextView) itemView.findViewById(R.id.crime_title);
+            mDateTextView = (TextView) itemView.findViewById(R.id.crime_date);
+        }
         public void bind(Based based) {
             mBased = based;
             mTitleTextView.setText(mBased.getTitle());
             mDateTextView.setText(mBased.getDate().toString());
-        }
-        public BasedHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.list_item_based, parent, false));
-            itemView.setOnClickListener(this);
         }
         public void onClick(View view){
             Toast.makeText(getActivity(), mBased.getTitle() + "clicked!", Toast.LENGTH_SHORT).show();
