@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BasedIntent</string>
+    <string name="app_name">Based Intent</string>
     <string name="title_activity_based">BasedActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
