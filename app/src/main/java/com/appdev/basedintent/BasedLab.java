@@ -12,6 +12,7 @@ public class BasedLab {
     private static BasedLab sCrimeLab;
 
     private List<Based> mCrimes;
+    private List<UUID> mId;
 
 
     public static BasedLab get(Context context){
@@ -28,6 +29,7 @@ public class BasedLab {
             crime.setTitle("Based Act #" + i);
             crime.setBased(i%2 == 0);
             mCrimes.add(crime);
+            mId.add(crime.getId());
         }
     }
 
@@ -36,10 +38,8 @@ public class BasedLab {
     }
 
     public Based getCrime(UUID id){
-        for (Based crime : mCrimes){
-            if (crime.getId().equals(id)){
-                return crime;
-            }
+        if (mId.contains(id)){
+            return mCrimes.get(mId.indexOf(id));
         }
 
         return null;
