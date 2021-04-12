@@ -1,5 +1,6 @@
 package com.appdev.basedintent;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,12 @@ public class BasedListFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
     private class BasedHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private Based mBased;
@@ -53,7 +60,8 @@ public class BasedListFragment extends Fragment {
             mDateTextView.setText(mBased.getDate().toString());
         }
         public void onClick(View view){
-            Toast.makeText(getActivity(), mBased.getTitle() + "clicked!", Toast.LENGTH_SHORT).show();
+            Intent intent = BasedActivity.newIntent(getActivity(), mBased.getId());
+            startActivity(intent);
         }
     }
 
@@ -89,8 +97,12 @@ public class BasedListFragment extends Fragment {
         BasedLab basedLab = BasedLab.get(getActivity());
         List<Based> baseds = basedLab.getCrimes();
 
-        mAdapter = new BasedAdapter((baseds));
-        mBasedRecyclerView.setAdapter(mAdapter);
+        if (mAdapter == null) {
+            mAdapter = new BasedAdapter((baseds));
+            mBasedRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
 }
