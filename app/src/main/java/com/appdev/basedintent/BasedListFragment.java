@@ -21,6 +21,7 @@ public class BasedListFragment extends Fragment {
 
     private RecyclerView mBasedRecyclerView;
     private BasedAdapter mAdapter;
+    private int mLastClick = -1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -60,6 +61,7 @@ public class BasedListFragment extends Fragment {
             mDateTextView.setText(mBased.getDate().toString());
         }
         public void onClick(View view){
+            mLastClick = getAdapterPosition();
             Intent intent = BasedActivity.newIntent(getActivity(), mBased.getId());
             startActivity(intent);
         }
@@ -101,8 +103,13 @@ public class BasedListFragment extends Fragment {
             mAdapter = new BasedAdapter((baseds));
             mBasedRecyclerView.setAdapter(mAdapter);
         } else {
-            mAdapter.notifyDataSetChanged();
+            if (mLastClick > 0){
+                mAdapter.notifyItemChanged(mLastClick);
+                mLastClick = -1;
+            }
         }
+
+        //
     }
 
 }
