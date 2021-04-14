@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.w3c.dom.Text;
 
+import java.text.DateFormat;
 import java.util.List;
 
 public class BasedListFragment extends Fragment {
@@ -58,7 +59,7 @@ public class BasedListFragment extends Fragment {
         public void bind(Based based) {
             mBased = based;
             mTitleTextView.setText(mBased.getTitle());
-            mDateTextView.setText(mBased.getDate().toString());
+            mDateTextView.setText(DateFormat.getDateInstance().format(mBased.getDate()));
         }
         public void onClick(View view){
             mLastClick = getAdapterPosition();

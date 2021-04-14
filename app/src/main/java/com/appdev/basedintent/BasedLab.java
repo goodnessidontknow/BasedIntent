@@ -24,6 +24,7 @@ public class BasedLab {
 
     private BasedLab(Context context){
         mCrimes = new ArrayList<>();
+        mId = new ArrayList<>();
         for (int i = 0; i < 100; i++){
             Based crime = new Based();
             crime.setTitle("Based Act #" + i);

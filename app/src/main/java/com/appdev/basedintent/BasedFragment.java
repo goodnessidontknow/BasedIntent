@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.text.DateFormat;
 import java.util.UUID;
 
 public class BasedFragment extends Fragment {
@@ -63,7 +64,7 @@ public class BasedFragment extends Fragment {
         });
 
         mDateButton = v.findViewById(R.id.crime_date);
-        mDateButton.setText(mBased.getDate().toString());
+        mDateButton.setText(DateFormat.getDateInstance().format(mBased.getDate()));
         mDateButton.setEnabled(false);
 
         mBasedCheckBox = v.findViewById(R.id.action_based);
