@@ -16,17 +16,32 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.text.DateFormat;
+import java.util.UUID;
+
 public class BasedFragment extends Fragment {
+
+    private static final String ARG_BASED_ID = "based_id";
 
     private Based mBased;
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mBasedCheckBox;
 
+    public static BasedFragment newInstance(UUID basedId) {
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_BASED_ID, basedId);
+
+        BasedFragment fragment = new BasedFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBased = new Based();
+        UUID basedId = (UUID) getArguments().getSerializable(ARG_BASED_ID);
+        mBased = BasedLab.get(getActivity()).getCrime(basedId);
     }
 
     @Override
@@ -34,6 +49,7 @@ public class BasedFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_based,container,false);
 
         mTitleField = v.findViewById(R.id.crime_title);
+        mTitleField.setText(mBased.getTitle());
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -48,10 +64,11 @@ public class BasedFragment extends Fragment {
         });
 
         mDateButton = v.findViewById(R.id.crime_date);
-        mDateButton.setText(mBased.getDate().toString());
+        mDateButton.setText(DateFormat.getDateInstance().format(mBased.getDate()));
         mDateButton.setEnabled(false);
 
         mBasedCheckBox = v.findViewById(R.id.action_based);
+        mBasedCheckBox.setChecked(mBased.isBased());
         mBasedCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> mBased.setBased(isChecked));
 
         return v;

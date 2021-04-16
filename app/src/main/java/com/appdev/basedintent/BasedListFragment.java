@@ -1,5 +1,6 @@
 package com.appdev.basedintent;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +15,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.w3c.dom.Text;
 
+import java.text.DateFormat;
 import java.util.List;
 
 public class BasedListFragment extends Fragment {
 
     private RecyclerView mBasedRecyclerView;
     private BasedAdapter mAdapter;
+    private int mLastClick = -1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -32,6 +35,12 @@ public class BasedListFragment extends Fragment {
         updateUI();
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI();
     }
 
     private class BasedHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -50,10 +59,12 @@ public class BasedListFragment extends Fragment {
         public void bind(Based based) {
             mBased = based;
             mTitleTextView.setText(mBased.getTitle());
-            mDateTextView.setText(mBased.getDate().toString());
+            mDateTextView.setText(DateFormat.getDateInstance().format(mBased.getDate()));
         }
         public void onClick(View view){
-            Toast.makeText(getActivity(), mBased.getTitle() + "clicked!", Toast.LENGTH_SHORT).show();
+            mLastClick = getAdapterPosition();
+            Intent intent = BasedActivity.newIntent(getActivity(), mBased.getId());
+            startActivity(intent);
         }
     }
 
@@ -89,8 +100,17 @@ public class BasedListFragment extends Fragment {
         BasedLab basedLab = BasedLab.get(getActivity());
         List<Based> baseds = basedLab.getCrimes();
 
-        mAdapter = new BasedAdapter((baseds));
-        mBasedRecyclerView.setAdapter(mAdapter);
+        if (mAdapter == null) {
+            mAdapter = new BasedAdapter((baseds));
+            mBasedRecyclerView.setAdapter(mAdapter);
+        } else {
+            if (mLastClick > 0){
+                mAdapter.notifyItemChanged(mLastClick);
+                mLastClick = -1;
+            }
+        }
+
+        //
     }
 
 }

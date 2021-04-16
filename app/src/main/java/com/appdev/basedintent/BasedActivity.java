@@ -1,5 +1,7 @@
 package com.appdev.basedintent;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -12,10 +14,21 @@ import androidx.fragment.app.FragmentManager;
 
 import android.view.View;
 
+import java.util.UUID;
 
-public class BasedActivity extends AppCompatActivity {
+
+public class BasedActivity extends SingleFragmentActivity {
+
+    private static final String EXTRA_BASED_ID = "com.appdev.dasedintent.crime_id";
+
+    public static Intent newIntent(Context packageContext, UUID basedId) {
+        Intent intent = new Intent(packageContext, BasedActivity.class);
+        intent.putExtra(EXTRA_BASED_ID, basedId);
+        return intent;
+    }
 
     protected Fragment createFragment() {
-        return new BasedFragment();
+        UUID basedId = (UUID) getIntent().getSerializableExtra(EXTRA_BASED_ID);
+        return BasedFragment.newInstance(basedId);
     }
 }
