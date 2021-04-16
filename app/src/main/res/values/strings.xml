@@ -13,4 +13,5 @@
     <string name="crime_title_hint">Enter a title</string>
     <string name="crime_details_label">Details</string>
     <string name="crime_based_label">Based</string>
+    <string name="date_picker_title">Based Date:</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.appdev.basedintent;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,6 +16,7 @@ import android.widget.RadioGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import java.text.DateFormat;
 import java.util.UUID;
@@ -22,6 +24,7 @@ import java.util.UUID;
 public class BasedFragment extends Fragment {
 
     private static final String ARG_BASED_ID = "based_id";
+    private static final String DIALOG_DATE = "dialog_date";
 
     private Based mBased;
     private EditText mTitleField;
@@ -60,12 +63,17 @@ public class BasedFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         mDateButton = v.findViewById(R.id.crime_date);
         mDateButton.setText(DateFormat.getDateInstance().format(mBased.getDate()));
-        mDateButton.setEnabled(false);
+        mDateButton.setOnClickListener(view -> {
+            DatePickerFragment dialog = new DatePickerFragment();
+            FragmentManager fm = getFragmentManager();
+            dialog.show(fm, DIALOG_DATE);
+        });
 
         mBasedCheckBox = v.findViewById(R.id.action_based);
         mBasedCheckBox.setChecked(mBased.isBased());
