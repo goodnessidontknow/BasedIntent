@@ -1,6 +1,5 @@
 package com.appdev.basedintent;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,9 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,9 +16,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import java.text.DateFormat;
+import java.util.Date;
 import java.util.UUID;
 
-public class BasedFragment extends Fragment {
+public class BasedFragment extends Fragment implements DatePickerFragment.OnDateUpdateListener{
 
     private static final String ARG_BASED_ID = "based_id";
     private static final String DIALOG_DATE = "dialog_date";
@@ -69,9 +67,10 @@ public class BasedFragment extends Fragment {
 
         mDateButton = v.findViewById(R.id.crime_date);
         mDateButton.setText(DateFormat.getDateInstance().format(mBased.getDate()));
-        mDateButton.setOnClickListener(view -> {
-            DatePickerFragment dialog = new DatePickerFragment();
-            FragmentManager fm = getFragmentManager();
+        mDateButton.setOnClickListener((view) -> {
+            DatePickerFragment dialog = DatePickerFragment.newInstance(mBased.getDate());
+            dialog.setTargetFragment(BasedFragment.this, 0);
+            FragmentManager fm = getParentFragmentManager();
             dialog.show(fm, DIALOG_DATE);
         });
 
@@ -80,5 +79,11 @@ public class BasedFragment extends Fragment {
         mBasedCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> mBased.setBased(isChecked));
 
         return v;
+    }
+
+    @Override
+    public void onDateUpdate(Date date) {
+        mBased.setDate(date);
+        mDateButton.setText(mBased.getDate().toString());
     }
 }
