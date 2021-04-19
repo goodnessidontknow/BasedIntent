@@ -1,5 +1,6 @@
 package com.appdev.basedintent;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,14 +13,16 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import java.sql.Time;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.UUID;
 
-public class BasedFragment extends Fragment implements DatePickerFragment.OnDateUpdateListener{
+public class BasedFragment extends Fragment implements DatePickerFragment.OnDateUpdateListener {
 
     private static final String ARG_BASED_ID = "based_id";
     private static final String DIALOG_DATE = "dialog_date";
@@ -45,6 +48,7 @@ public class BasedFragment extends Fragment implements DatePickerFragment.OnDate
         mBased = BasedLab.get(getActivity()).getCrime(basedId);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_based,container,false);
