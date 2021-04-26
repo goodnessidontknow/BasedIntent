@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BasedActivity"
+            android:name=".BasedPagerActivity"
             android:label="@string/title_activity_based"
             android:theme="@style/Theme.BasedIntent.NoActionBar"></activity>
     </application>

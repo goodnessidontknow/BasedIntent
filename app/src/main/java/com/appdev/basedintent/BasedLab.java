@@ -33,11 +33,11 @@ public class BasedLab {
         }
     }
 
-    public List<Based> getCrimes(){
+    public List<Based> getBasedActions(){
         return mCrimes;
     }
 
-    public Based getCrime(UUID id){
+    public Based getBased(UUID id){
         if (mId.contains(id)){
             return mCrimes.get(mId.indexOf(id));
         }
@@ -46,4 +46,7 @@ public class BasedLab {
     }
 
 
+    public void addBased(Based based) {
+        mCrimes.add(based);
+    }
 }

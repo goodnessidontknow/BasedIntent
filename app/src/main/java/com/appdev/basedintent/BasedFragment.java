@@ -17,7 +17,6 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import java.sql.Time;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.UUID;
@@ -45,7 +44,7 @@ public class BasedFragment extends Fragment implements DatePickerFragment.OnDate
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UUID basedId = (UUID) getArguments().getSerializable(ARG_BASED_ID);
-        mBased = BasedLab.get(getActivity()).getCrime(basedId);
+        mBased = BasedLab.get(getActivity()).getBased(basedId);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

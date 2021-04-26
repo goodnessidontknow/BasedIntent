@@ -3,17 +3,18 @@ package com.appdev.basedintent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.util.List;
@@ -23,6 +24,33 @@ public class BasedListFragment extends Fragment {
     private RecyclerView mBasedRecyclerView;
     private BasedAdapter mAdapter;
     private int mLastClick = -1;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_based_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.new_based:
+                Based based = new Based();
+                BasedLab basedLab = BasedLab.get(getActivity());
+                basedLab.addBased(based);
+                Intent intent = BasedPagerActivity.newIntent(getActivity(), based.getId());
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -63,7 +91,7 @@ public class BasedListFragment extends Fragment {
         }
         public void onClick(View view){
             mLastClick = getAdapterPosition();
-            Intent intent = BasedActivity.newIntent(getActivity(), mBased.getId());
+            Intent intent = BasedPagerActivity.newIntent(getActivity(), mBased.getId());
             startActivity(intent);
         }
     }
@@ -98,7 +126,7 @@ public class BasedListFragment extends Fragment {
 
     private void updateUI(){
         BasedLab basedLab = BasedLab.get(getActivity());
-        List<Based> baseds = basedLab.getCrimes();
+        List<Based> baseds = basedLab.getBasedActions();
 
         if (mAdapter == null) {
             mAdapter = new BasedAdapter((baseds));
