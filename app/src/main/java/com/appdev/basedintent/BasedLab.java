@@ -24,13 +24,6 @@ public class BasedLab {
     private BasedLab(Context context){
         mCrimes = new ArrayList<>();
         mId = new ArrayList<>();
-        for (int i = 0; i < 100; i++){
-            Based crime = new Based();
-            crime.setTitle("Based Act #" + i);
-            crime.setBased(i%2 == 0);
-            mCrimes.add(crime);
-            mId.add(crime.getId());
-        }
     }
 
     public List<Based> getBasedActions(){
@@ -48,5 +41,6 @@ public class BasedLab {
 
     public void addBased(Based based) {
         mCrimes.add(based);
+        mId.add(based.getId());
     }
 }

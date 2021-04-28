@@ -26,6 +26,8 @@ public class BasedFragment extends Fragment implements DatePickerFragment.OnDate
     private static final String ARG_BASED_ID = "based_id";
     private static final String DIALOG_DATE = "dialog_date";
 
+    private static final int REQUEST_DATE = 0;
+
     private Based mBased;
     private EditText mTitleField;
     private Button mDateButton;
@@ -72,7 +74,7 @@ public class BasedFragment extends Fragment implements DatePickerFragment.OnDate
         mDateButton.setText(DateFormat.getDateInstance().format(mBased.getDate()));
         mDateButton.setOnClickListener((view) -> {
             DatePickerFragment dialog = DatePickerFragment.newInstance(mBased.getDate());
-            dialog.setTargetFragment(BasedFragment.this, 0);
+            dialog.setTargetFragment(BasedFragment.this, REQUEST_DATE);
             FragmentManager fm = getParentFragmentManager();
             dialog.show(fm, DIALOG_DATE);
         });

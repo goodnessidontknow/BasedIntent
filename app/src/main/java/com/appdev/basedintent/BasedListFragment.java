@@ -132,10 +132,11 @@ public class BasedListFragment extends Fragment {
             mAdapter = new BasedAdapter((baseds));
             mBasedRecyclerView.setAdapter(mAdapter);
         } else {
-            if (mLastClick > 0){
+            mAdapter.notifyDataSetChanged();
+            /*if (mLastClick > 0){
                 mAdapter.notifyItemChanged(mLastClick);
                 mLastClick = -1;
-            }
+            }*/
         }
 
         //
