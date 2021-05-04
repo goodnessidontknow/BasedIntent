@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BasedIntent">
-        <activity android:name=".BasedListActivity">
+        <activity android:name=".BasedListActivity"
+            android:label="@string/based_list_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -17,8 +18,9 @@
         </activity>
         <activity
             android:name=".BasedPagerActivity"
-            android:label="@string/title_activity_based"
-            android:theme="@style/Theme.BasedIntent.NoActionBar"></activity>
+            android:parentActivityName=".BasedListActivity"
+            android:label="@string/based_detail_title"
+            android:theme="@style/Theme.BasedIntent.NoActionBar"/>
     </application>
 
 </manifest>

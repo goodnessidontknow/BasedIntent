@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,11 +25,20 @@ public class BasedListFragment extends Fragment {
     private RecyclerView mBasedRecyclerView;
     private BasedAdapter mAdapter;
     private int mLastClick = -1;
+    private BasedLab mBasedLab;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        mBasedLab = BasedLab.get(getActivity());
+        updateSubtitle();
+    }
+
+    private void updateSubtitle() {
+        int basedCount = mBasedLab.getBasedActions().size();
+        String subtitle = getString(R.string.based_count, basedCount);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(subtitle);
     }
 
     @Override
@@ -42,8 +52,7 @@ public class BasedListFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.new_based:
                 Based based = new Based();
-                BasedLab basedLab = BasedLab.get(getActivity());
-                basedLab.addBased(based);
+                mBasedLab.addBased(based);
                 Intent intent = BasedPagerActivity.newIntent(getActivity(), based.getId());
                 startActivity(intent);
                 return true;
@@ -69,6 +78,7 @@ public class BasedListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateUI();
+        updateSubtitle();
     }
 
     private class BasedHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

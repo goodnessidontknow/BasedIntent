@@ -3,6 +3,7 @@ package com.appdev.basedintent;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,4 +44,5 @@ public class BasedLab {
         mCrimes.add(based);
         mId.add(based.getId());
     }
+
 }
