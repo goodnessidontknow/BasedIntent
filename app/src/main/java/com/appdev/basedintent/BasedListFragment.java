@@ -1,6 +1,7 @@
 package com.appdev.basedintent;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -8,6 +9,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,6 +27,7 @@ public class BasedListFragment extends Fragment {
 
     private RecyclerView mBasedRecyclerView;
     private BasedAdapter mAdapter;
+    private Button mButton;
     private int mLastClick = -1;
     private BasedLab mBasedLab;
 
@@ -64,19 +68,27 @@ public class BasedListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_crime_list, container, false);
-
-        mBasedRecyclerView = (RecyclerView) view.findViewById(R.id.crime_recycler_view);
-
+        mBasedRecyclerView = view.findViewById(R.id.crime_recycler_view);
         mBasedRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        View empty = view.findViewById(R.id.custom_empty_view);
+        mButton = empty.findViewById(R.id.add_based_button);
+        mButton.setOnClickListener(view1 -> {
+            Based based = new Based();
+            BasedLab basedLab = BasedLab.get(getActivity());
+            basedLab.addBased(based);
+            Intent intent = BasedPagerActivity.newIntent(getActivity(), based.getId());
+            startActivity(intent);
+        });
+        empty.setVisibility(getBaseds().isEmpty() ? View.VISIBLE : View.INVISIBLE);
         updateUI();
-
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        View empty = getView().findViewById(R.id.custom_empty_view);
+        empty.setVisibility(getBaseds().isEmpty() ? View.VISIBLE : View.INVISIBLE);
         updateUI();
         updateSubtitle();
     }
@@ -135,21 +147,19 @@ public class BasedListFragment extends Fragment {
     }
 
     private void updateUI(){
-        BasedLab basedLab = BasedLab.get(getActivity());
-        List<Based> baseds = basedLab.getBasedActions();
+        List<Based> baseds = getBaseds();
 
         if (mAdapter == null) {
-            mAdapter = new BasedAdapter((baseds));
+            mAdapter = new BasedAdapter(baseds);
             mBasedRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.notifyDataSetChanged();
-            /*if (mLastClick > 0){
-                mAdapter.notifyItemChanged(mLastClick);
-                mLastClick = -1;
-            }*/
         }
+    }
 
-        //
+    private List<Based> getBaseds() {
+        BasedLab basedLab = BasedLab.get(getActivity());
+        return basedLab.getBasedActions();
     }
 
 }

@@ -17,7 +17,8 @@
     <string name="date_picker_title">Based Date:</string>
     <string name="time_picker_title">Based Time:</string>
     <string name="new_based">New Based</string>
+    <string name="no_based">There are no based actions</string>
     <string name="based_detail_title">based_detail</string>
-    <string name="based_list_title">Listed of Baseds</string>
-    <string name="based_count">%d baseds</string>
+    <string name="based_list_title">Listed of Based Actions</string>
+    <string name="based_count">%d based actions</string>
 </resources>

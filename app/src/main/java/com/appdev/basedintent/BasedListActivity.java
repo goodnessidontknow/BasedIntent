@@ -1,9 +1,11 @@
 package com.appdev.basedintent;
 
+import androidx.fragment.app.Fragment;
+
 public class BasedListActivity extends SingleFragmentActivity{
 
     @Override
-    protected BasedListFragment createFragment(){
+    protected Fragment createFragment(){
         return new BasedListFragment();
     }
 }
