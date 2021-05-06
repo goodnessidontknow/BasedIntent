@@ -20,5 +20,8 @@
     <string name="no_based">There are no based actions</string>
     <string name="based_detail_title">based_detail</string>
     <string name="based_list_title">Listed of Based Actions</string>
-    <string name="based_count">%d based actions</string>
+    <plurals name="subtitle_plural">
+        <item quantity="one">%1$d based actions</item>
+        <item quantity="other">%1$d based actions</item>
+    </plurals>
 </resources>

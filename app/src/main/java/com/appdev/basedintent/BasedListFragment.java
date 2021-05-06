@@ -1,6 +1,7 @@
 package com.appdev.basedintent;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -41,7 +42,7 @@ public class BasedListFragment extends Fragment {
 
     private void updateSubtitle() {
         int basedCount = mBasedLab.getBasedActions().size();
-        String subtitle = getString(R.string.based_count, basedCount);
+        String subtitle = getResources().getQuantityString(R.plurals.subtitle_plural, basedCount, basedCount);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(subtitle);
     }
 
